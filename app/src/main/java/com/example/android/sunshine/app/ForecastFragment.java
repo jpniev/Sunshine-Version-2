@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -78,15 +79,18 @@ public class ForecastFragment extends Fragment {
                 "Lunes - Soleado - 22/34", "Martes - Neblinoso - 21/27"
         };
 
-        ArrayList<String> pronosticoSemanal = new ArrayList<String>(Arrays.asList(pronosticoArray));
+        final ArrayList<String> pronosticoSemanal = new ArrayList<String>(Arrays.asList(pronosticoArray));
         mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview, pronosticoSemanal);
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        final ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ForecastFragment.this,"hola", Toast.LENGTH_SHORT).show();
+                String pronostico = mForecastAdapter.getItem(position);
+                Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                detailIntent.putExtra("pronostico",pronostico);
+                startActivity(detailIntent);
             }
         });
 
