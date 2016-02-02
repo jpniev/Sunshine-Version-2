@@ -16,13 +16,10 @@
 
 package com.example.android.sunshine.app;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,13 +34,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class DetailActivity extends AppCompatActivity {
 
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +44,6 @@ public class DetailActivity extends AppCompatActivity {
                     .commit();
         }
 
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -88,9 +74,7 @@ public class DetailActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
+
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "Detail Page", // TODO: Define a title for the content shown.
@@ -101,7 +85,7 @@ public class DetailActivity extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.android.sunshine.app/http/host/path")
         );
-        AppIndex.AppIndexApi.start(client, viewAction);
+
     }
 
     @Override
@@ -120,8 +104,7 @@ public class DetailActivity extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.android.sunshine.app/http/host/path")
         );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+
     }
 
     /**
