@@ -64,6 +64,8 @@ public class DetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this,SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -122,8 +124,8 @@ public class DetailActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
             Intent intent = getActivity().getIntent();
-            String pronostico = intent.getStringExtra("pronostico");
-            if (intent != null && intent.hasExtra("pronostico")) {
+            String pronostico = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 ((TextView) rootView.findViewById(R.id.detail_text)).setText(pronostico);
             }
 
