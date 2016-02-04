@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -39,8 +40,26 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
-    String location = null;
     private GoogleApiClient client;
+
+    private String getLocation(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String location = sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        return location;
+    }
+
+    private void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else{
+            Toast t = new Toast(this);
+            t.setText(R.string.error_app_not_available);
+            t.setDuration(Toast.LENGTH_SHORT);
+            t.show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +94,15 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this,SettingsActivity.class);
             startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_view_on_map){
+            String location = getLocation();
+            Uri geoLocation = Uri.parse("geo:0,0").buildUpon()
+                    .appendQueryParameter("q", location)
+                    .build();
+            showMap(geoLocation);
             return true;
         }
 

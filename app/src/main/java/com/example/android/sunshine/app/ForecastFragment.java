@@ -44,17 +44,23 @@ import java.util.Set;
 public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
-    private String location = null;
 
     public ForecastFragment() {
     }
 
     private void updateWeather(){
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        location = sharedPref.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+        String location = getLocation();
         weatherTask.execute(location);
     }
+
+    public String getLocation(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        return location;
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class ForecastFragment extends Fragment {
             //new FetchWeatherTask().execute(); //es otra alternativa
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
